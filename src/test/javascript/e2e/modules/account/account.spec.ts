@@ -20,6 +20,8 @@ import {
   getInfoToast,
   getDangerToast
 } from '../../util/utils';
+import * as fs from 'fs';
+import { BrowserStack } from 'protractor/built/driverProviders';
 
 const expect = chai.expect;
 
@@ -316,7 +318,13 @@ describe('Account', () => {
     await browser.get('/admin/user-management');
     const editBtn = getUserEditButtonByLogin('user_test');
     await waitUntilClickable(editBtn);
-    await editBtn.click();
+    try {
+      await editBtn.click();
+    } catch (e) {
+      browser.getPageSource().then(data => {
+        fs.writeFileSync('edit.html', data);
+      });
+    }
 
     const editHeading = element(by.css('h2#myUserLabel'));
     await waitUntilDisplayed(editHeading);
@@ -336,8 +344,14 @@ describe('Account', () => {
     await browser.get('/admin/user-management');
     const deleteBtn = getUserDeleteButtonByLogin('user_test');
     await waitUntilClickable(deleteBtn);
-    await deleteBtn.click();
 
+    try {
+      await deleteBtn.click();
+    } catch (e) {
+      browser.getPageSource().then(data => {
+        fs.writeFileSync('edit.html', data);
+      });
+    }
     const deleteModal = element(by.className('modal'));
     await waitUntilDisplayed(deleteModal);
 

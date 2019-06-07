@@ -13,7 +13,7 @@ exports.config = {
     chromeOptions: {
       args: process.env.JHI_E2E_HEADLESS
         ? ['--headless', '--disable-gpu', '--window-size=800,600']
-        : ['--disable-gpu', '--window-size=800,600']
+        : ['--headless', '--disable-gpu', '--window-size=800,600']
     }
   },
 
@@ -29,7 +29,7 @@ exports.config = {
     reporter: 'spec',
     slow: 3000,
     ui: 'bdd',
-    timeout: 30000
+    timeout: 60000
   },
 
   beforeLaunch() {
